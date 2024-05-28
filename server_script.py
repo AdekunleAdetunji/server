@@ -2,10 +2,10 @@
 """
 This module starts up the server waiting for client connection
 """
-from . import env_vars
-from . import logger
-from .server import Server
-from .server import TCPHandler
+from server import env_vars
+from server import logger
+from server.server import Server
+from server.server import TCPHandler
 from pydantic_core import ValidationError
 
 if __name__ == "__main__":

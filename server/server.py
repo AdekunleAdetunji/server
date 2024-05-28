@@ -15,6 +15,8 @@ from ssl import Purpose
 from ssl import SSLContext
 from typing import Any
 from typing import Callable
+from typing import Tuple
+from typing import Union
 
 
 class Server(socketserver.ThreadingTCPServer):
@@ -35,7 +37,7 @@ class Server(socketserver.ThreadingTCPServer):
 
     def __init__(
         self,
-        server_address: tuple[str | bytes | bytearray, int],
+        server_address: Tuple[Union[str, bytes, bytearray], int],
         RequestHandlerClass: Callable[
             [Any, Any, socketserver.TCPServer],
             socketserver.StreamRequestHandler,
@@ -51,8 +53,8 @@ class Server(socketserver.ThreadingTCPServer):
             env_vars_obj (LoadEnv): An object containing environment variables.
         """
         self.ssl: bool = env_vars_obj.SSL
-        self.certfile: Path | None = env_vars_obj.CERTFILE
-        self.keyfile: Path | None = env_vars_obj.KEYFILE
+        self.certfile: Union[Path, None] = env_vars_obj.CERTFILE
+        self.keyfile: Union[Path, None] = env_vars_obj.KEYFILE
         self.reread_on_query: bool = env_vars_obj.REREAD_ON_QUERY
         self.linuxpath: Path = env_vars_obj.LINUXPATH
         self.debug: Path = env_vars_obj.DEBUG
@@ -62,8 +64,8 @@ class Server(socketserver.ThreadingTCPServer):
 
     def server_activate(self) -> None:
         """
-        Activate the server instance, initialize the database, and set up SSL if
-        enabled.
+        Activate the server instance, initialize the database, and set up SSL
+        if enabled.
         """
         # make the read file data available to the server instance
         self.database: Database = Database(
@@ -73,7 +75,8 @@ class Server(socketserver.ThreadingTCPServer):
         # secure the server if SSL authentication is set to True
         if self.ssl:
             context: SSLContext = create_default_context(Purpose.CLIENT_AUTH)
-            context.load_cert_chain(self.certfile, self.keyfile)  # type: ignore
+            secret = (self.certfile, self.keyfile)
+            context.load_cert_chain(*secret)  # type: ignore
             self.socket = context.wrap_socket(self.socket, server_side=True)
 
         # activate the TCP server

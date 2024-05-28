@@ -8,12 +8,11 @@ from pathlib import Path
 from pydantic import Field
 from pydantic import field_validator
 from pydantic import ValidationInfo
-
-# from pydantic_core import ValidationError
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 from pydantic.networks import IPvAnyAddress
-from typing import Annotated
+from typing import Union
+from typing_extensions import Annotated
 
 
 class LoadEnv(BaseSettings):
@@ -40,8 +39,8 @@ class LoadEnv(BaseSettings):
     LINUXPATH: Path
     SSL: bool = True
     REREAD_ON_QUERY: bool = False
-    CERTFILE: Path | None = None
-    KEYFILE: Path | None = None
+    CERTFILE: Union[Path, None] = None
+    KEYFILE: Union[Path, None] = None
     DEBUG: Path
 
     @field_validator("LINUXPATH", mode="before")
@@ -66,7 +65,7 @@ class LoadEnv(BaseSettings):
 
         # check if the file exist, raise error if it does not exist
         if not path_obj.is_file():
-            field_name: str | None = info.field_name
+            field_name: Union[str, None] = info.field_name
             msg = "Invalid file path"
             raise ValueError(msg)
         return linux_path
@@ -75,7 +74,7 @@ class LoadEnv(BaseSettings):
     @classmethod
     def validate_ssl_path(
         cls, path_str: str, info: ValidationInfo
-    ) -> str | None:
+    ) -> Union[str, None]:
         """
         Validates the SSL certificate and key file paths if SSL is enabled.
 
@@ -90,7 +89,7 @@ class LoadEnv(BaseSettings):
             ValueError: If the file does not exist or the path is empty.
         """
         # get the value assigned to the ssl environment variable
-        SSL: bool | None = info.data.get("SSL")
+        SSL: Union[bool, None] = info.data.get("SSL")
         if SSL:
             # create a path object from the value supplied to the
             # CERTFILE or KEYFILE environment variable
@@ -98,7 +97,7 @@ class LoadEnv(BaseSettings):
 
             # check if the file exist, raise error if it does not exist
             if not path_obj.is_file():
-                field_name: str | None = info.field_name
+                field_name: Union[str, None] = info.field_name
                 msg = "Invalid file path"
                 raise ValueError(msg)
             return path_str
@@ -106,7 +105,7 @@ class LoadEnv(BaseSettings):
 
     @field_validator("DEBUG", mode="before")
     @classmethod
-    def validate_debug_path(cls, path_str: str | None) -> str:
+    def validate_debug_path(cls, path_str: Union[str, None]) -> str:
         """
         Validates and sets the path for the debug log file.
 

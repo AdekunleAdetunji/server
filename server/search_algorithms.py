@@ -2,6 +2,7 @@
 """This module contains various search algorithms"""
 import math
 from bisect import bisect_left
+from typing import List
 
 
 class SearchAlgorithmError(TypeError):
@@ -15,17 +16,17 @@ class SearchAlgorithmError(TypeError):
 # Custom error object for argument type errors
 arg_error_obj = SearchAlgorithmError(
     "Argument type to function is wrong, function takes arguments of "
-    "type 'list' and 'str' respectively"
+    "type 'List' and 'str' respectively"
 )
 
 
-def bisect_search(sorted_arr: list[str], search_str: str) -> bool:
+def bisect_search(sorted_arr: List[str], search_str: str) -> bool:
     """
     Implementation of the binary search algorithm using the bisect_left
     function of python bisect module
 
     Args:
-        sorted_arr (List[str]): The sorted list of strings to search through.
+        sorted_arr (List[str]): The sorted List of strings to search through.
         search_str (str): The string to search for.
 
     Returns:
@@ -42,12 +43,12 @@ def bisect_search(sorted_arr: list[str], search_str: str) -> bool:
         return False
 
 
-def jump_search(sorted_arr: list[str], search_str: str) -> bool:
+def jump_search(sorted_arr: List[str], search_str: str) -> bool:
     """
     Implementation of the jump search algorithm.
 
     Args:
-        sorted_arr (List[str]): The sorted list of strings to search through.
+        sorted_arr (List[str]): The sorted List of strings to search through.
         search_str (str): The string to search for.
 
     Returns:
@@ -85,12 +86,12 @@ def jump_search(sorted_arr: list[str], search_str: str) -> bool:
     return False  # search string not in array
 
 
-def binary_search_recurse(sorted_arr: list[str], search_str: str) -> bool:
+def binary_search_recurse(sorted_arr: List[str], search_str: str) -> bool:
     """
     Implementation of the binary search algorithm using recursion.
 
     Args:
-        sorted_arr (List[str]): The sorted list of strings to search through.
+        sorted_arr (List[str]): The sorted List of strings to search through.
         search_str (str): The string to search for.
 
     Returns:
@@ -100,7 +101,7 @@ def binary_search_recurse(sorted_arr: list[str], search_str: str) -> bool:
     if not isinstance(sorted_arr, list) or not isinstance(search_str, str):
         raise arg_error_obj
 
-    # check for empty list
+    # check for empty List
     if not sorted_arr:
         return False
 
@@ -127,12 +128,12 @@ def binary_search_recurse(sorted_arr: list[str], search_str: str) -> bool:
     return False
 
 
-def binary_search_iter(sorted_arr: list[str], search_str: str) -> bool:
+def binary_search_iter(sorted_arr: List[str], search_str: str) -> bool:
     """
     Implementation of the binary search algorithm using recursion.
 
     Args:
-        sorted_arr (List[str]): The sorted list of strings to search through.
+        sorted_arr (List[str]): The sorted List of strings to search through.
         search_str (str): The string to search for.
 
     Returns:
@@ -159,11 +160,11 @@ def binary_search_iter(sorted_arr: list[str], search_str: str) -> bool:
             return False
 
 
-def python_linear_search(sorted_arr: list[str], search_str: str) -> bool:
+def python_linear_search(sorted_arr: List[str], search_str: str) -> bool:
     """
     Implementation of python native linear search algorithm
     Args:
-        sorted_arr (List[str]): The sorted list of strings to search through.
+        sorted_arr (List[str]): The sorted List of strings to search through.
         search_str (str): The string to search for.
 
     Returns:

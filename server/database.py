@@ -8,6 +8,7 @@ from .search_algorithms import jump_search
 from .search_algorithms import python_linear_search
 from pathlib import Path
 from typing import Callable
+from typing_extensions import List
 
 
 class Database:
@@ -24,14 +25,14 @@ class Database:
         __data (List[str]): The data loaded from the file, sorted.
     """
 
-    __data: list[str]
+    __data: List[str]
     __path: Path
 
     def __init__(
         self,
         reread_on_query: bool,
         file_path: Path,
-        sorting_algorithm: Callable[[list[str]], list[str]],
+        sorting_algorithm: Callable[[List[str]], List[str]],
     ):
         """
         Initializes the Database with the given parameters, reads and sorts
@@ -46,7 +47,7 @@ class Database:
         """
         self.reread_on_query: bool = reread_on_query
         self.__path: Path = file_path
-        self.sorting_algorithm: Callable[[list[str]], list[str]] = (
+        self.sorting_algorithm: Callable[[List[str]], List[str]] = (
             sorting_algorithm
         )
         self.__data = []
@@ -54,7 +55,7 @@ class Database:
 
     def search(
         self,
-        search_algo: Callable[[list[str], str], bool] = jump_search,
+        search_algo: Callable[[List[str], str], bool] = jump_search,
         search_str: str = "",
     ):
         """
