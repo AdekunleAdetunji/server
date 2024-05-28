@@ -1,0 +1,13 @@
+[Unit]
+Description=Python Server Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c "source env/bin/activate; python -m server.server_script.py"
+Restart=on-failure
+WorkingDirectory=/home/ubuntu/server
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
