@@ -30,7 +30,7 @@ def protected_server(xprocess):
             "-c",
             "cd "
             + str(BASE_DIR)
-            + " ; ssl=True"
+            + " ; ssl=True port=9001"
             + " python3 -m server.server_script",
         ]
         timeout = 5  # Maximum time to wait for the server to start
@@ -67,7 +67,7 @@ def unprotected_server(xprocess):
             "-c",
             "cd "
             + str(BASE_DIR)
-            + " ; ssl=False"
+            + " ; ssl=False port=9001"
             + " python -m server.server_script",
         ]
         timeout = 5  # Maximum time to wait for the server to start
