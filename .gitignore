@@ -2,8 +2,11 @@ env/
 .benchmarks/
 .mypy_cache/
 .pytest_cache/
+*.svg
 __pycache__/
-gen_files.py
 debug.log
 graphs/
-speed_test/
+1m.txt
+10k.txt
+100k.txt
+500k.txt
