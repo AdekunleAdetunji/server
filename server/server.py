@@ -129,10 +129,9 @@ class TCPHandler(socketserver.StreamRequestHandler):
 
                 # search the database wether the search string exists
                 if req_str and database.search(algorithm, f"{req_str}\n"):
-                    self.request.sendall(b"STRING EXISTS")
+                    self.request.sendall(b"STRING EXISTS\n")
                 else:
-                    self.request.sendall(b"STRING NOT FOUND")
-                # self.request.sendall(b"\n")
+                    self.request.sendall(b"STRING NOT FOUND\n")
                 resp_time = datetime.now().isoformat()
                 # time response was sent
                 process_end = time.time()
