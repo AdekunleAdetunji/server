@@ -6,6 +6,7 @@ It defines the Server and TCPHandler classes for handling incoming requests.
 import socketserver
 import time
 from . import logger
+from .search_algorithms import *
 from .database import Database
 from .setup import LoadEnv
 from datetime import datetime
@@ -17,6 +18,14 @@ from typing import Any
 from typing import Callable
 from typing import Tuple
 from typing import Union
+
+algorithms = {
+    "jump": jump_search,
+    "recursive": binary_search_recurse,
+    "iterative": binary_search_iter,
+    "bisect": bisect_search,
+    "linear": python_linear_search,
+}
 
 
 class Server(socketserver.ThreadingTCPServer):
@@ -58,6 +67,9 @@ class Server(socketserver.ThreadingTCPServer):
         self.reread_on_query: bool = env_vars_obj.REREAD_ON_QUERY
         self.linuxpath: Path = env_vars_obj.LINUXPATH
         self.debug: Path = env_vars_obj.DEBUG
+        self.algorithm: Callable[[List[str], str], bool] = algorithms[
+            env_vars_obj.ALGORITHM
+        ]
         self.daemon_threads: bool = True
 
         super().__init__(server_address, RequestHandlerClass)
@@ -99,6 +111,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
         database = self.server.database  # type: ignore
         client_ip = self.client_address[0]
         comm_port = self.client_address[1]
+        algorithm = self.server.algorithm  # type: ignore
 
         while True:
             try:
@@ -115,7 +128,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
                     break
 
                 # search the database wether the search string exists
-                if req_str and database.search(search_str=f"{req_str}\n"):
+                if req_str and database.search(algorithm, f"{req_str}\n"):
                     self.request.sendall(b"STRING EXISTS")
                 else:
                     self.request.sendall(b"STRING NOT FOUND")

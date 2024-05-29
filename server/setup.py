@@ -24,23 +24,29 @@ class LoadEnv(BaseSettings):
         HOST (IPvAnyAddress): The IP address on which the server runs.
         PORT (Annotated[int, Field(gt=0, lt=65535)]): The port number on which
                                                       the server runs.
+        TEST_PORT (Annotated[int, Field(gt=0, lt=65535)]): The port number on
+                                                      which the test servers
+                                                      run.
         LINUXPATH (Path): The path to the Linux search file.
         SSL (bool): Whether SSL is enabled or not.
         REREAD_ON_QUERY (bool): Whether to reload the search string file
                                 momentarily.
         CERTFILE (Path | None): The path to the SSL certificate file.
         KEYFILE (Path | None): The path to the SSL key file.
+        ALGORITHM (str): The search algorithm to use
         DEBUG (Path): The path to the debug log file.
     """
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     HOST: IPvAnyAddress
     PORT: Annotated[int, Field(gt=0, lt=65535)]
+    TEST_PORT: Annotated[int, Field(gt=0, lt=65535)]
     LINUXPATH: Path
     SSL: bool = True
     REREAD_ON_QUERY: bool = False
     CERTFILE: Union[Path, None] = None
     KEYFILE: Union[Path, None] = None
+    ALGORITHM: str
     DEBUG: Path
 
     @field_validator("LINUXPATH", mode="before")
@@ -102,6 +108,24 @@ class LoadEnv(BaseSettings):
                 raise ValueError(msg)
             return path_str
         return None
+
+    @field_validator("ALGORITHM")
+    @classmethod
+    def validate_algorithm(cls, value: str):
+        """
+        Validates that the search algorithm values is among the defined
+        search algorithms
+
+        Args:
+            value (str): The search algorithm value
+
+        Returns:
+            str: The validated algorithm value
+        """
+        algorithms = ["jump", "bisect", "recursive", "iterative", "linear"]
+        if value not in algorithms:
+            raise ValueError(f"Value must be one of {algorithms}")
+        return value
 
     @field_validator("DEBUG", mode="before")
     @classmethod

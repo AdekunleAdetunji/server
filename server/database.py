@@ -1,11 +1,6 @@
 #!/usr/bin/python3
 """This module contains various search algorithms"""
 import math
-from .search_algorithms import binary_search_iter
-from .search_algorithms import binary_search_recurse
-from .search_algorithms import bisect_search
-from .search_algorithms import jump_search
-from .search_algorithms import python_linear_search
 from pathlib import Path
 from typing import Callable
 from typing_extensions import List
@@ -55,7 +50,7 @@ class Database:
 
     def search(
         self,
-        search_algo: Callable[[List[str], str], bool] = jump_search,
+        search_algo: Callable[[List[str], str], bool],
         search_str: str = "",
     ):
         """
