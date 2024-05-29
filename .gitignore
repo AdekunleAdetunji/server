@@ -1,8 +1,9 @@
-gen_files.py
-env
-debug.log
-__pycache__/
-.env
-.pytest_cache/
+env/
+.benchmarks/
 .mypy_cache/
+.pytest_cache/
+__pycache__/
+gen_files.py
+debug.log
+graphs/
 speed_test/
