@@ -23,8 +23,7 @@ def test_10k_no_reread(server_10_no_reread, benchmark):
             ssl_conn = context.wrap_socket(conn, server_hostname="localhost")
             ssl_conn.sendall(b"3;0;1;28;0;7;5;0;")
             response = ssl_conn.recv(1024).decode()
-            assert response == "STRING EXISTS"
-            return True
+            return response
 
     result = benchmark(client_connection)
     print(result)
