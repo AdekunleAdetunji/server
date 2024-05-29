@@ -2,6 +2,7 @@ gen_files.py
 env
 debug.log
 __pycache__/
+.env
 .pytest_cache/
 .mypy_cache/
-.env
+speed_test/
