@@ -8,7 +8,7 @@ from socket import *
 
 
 with create_connection(
-    ("localhost", 9000),
+    ("100.25.38.175", 9000),
 ) as conn:
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context.load_verify_locations("cert.pem")
