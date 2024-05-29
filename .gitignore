@@ -1,4 +1,7 @@
+gen_files.py
+env
+debug.log
 __pycache__/
 .pytest_cache/
 .mypy_cache/
-env
+.env
