@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This script defines pytest fixtures to start and stop a server process
 with various configurations using the xprocess plugin. The configurations
@@ -165,7 +165,7 @@ def server_500_no_reread(xprocess):
             + str(BASE_DIR)
             + " ; reread_on_query=False port=9001"
             + " linux_path='speed_test/500k.txt'"
-            + " python -m server.server_script"
+            + " python -m server.server_script",
         ]
         timeout = 5  # Maximum time to wait for the server to start
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This script defines pytest fixtures to start and stop a server process
 with or without SSL enabled, using the xprocess plugin.

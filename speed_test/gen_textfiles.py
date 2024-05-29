@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This script processes a text file (200k.txt) by reading its contents,
 multiplying the lines to increase the dataset, and then creating

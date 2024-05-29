@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This module contains the server script to configure and run the server.
 It defines the Server and TCPHandler classes for handling incoming requests.

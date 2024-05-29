@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This script contains a series of tests that benchmark SSL/TLS connections
 to a server using different configurations for reading a specified number of

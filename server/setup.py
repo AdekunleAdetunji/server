@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This module sets up and configures the server environment variables, ensuring
 they are loaded and validated correctly.

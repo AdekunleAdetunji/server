@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 This module contains tests for verifying the functionality of a TCP server
 with both secure (SSL) and unsecure connections.

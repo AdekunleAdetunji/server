@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """This module contains various search algorithms"""
 import math
 from pathlib import Path
