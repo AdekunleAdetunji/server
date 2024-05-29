@@ -2,6 +2,7 @@ env/
 .benchmarks/
 .mypy_cache/
 .pytest_cache/
+*~
 *.svg
 __pycache__/
 debug.log
